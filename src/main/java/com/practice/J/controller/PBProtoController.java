@@ -1,6 +1,5 @@
 package com.practice.J.controller;
 
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.protobuf.util.JsonFormat;
@@ -12,10 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -23,12 +19,13 @@ import java.io.IOException;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "Proto API", description = "ProtoBuf 변환 API")
+@RequestMapping("/proto")
+@Tag(name = "Proto API", description = "ProtoBuf 정적 변환 API")
 public class PBProtoController {
 
     private final ObjectMapper objectMapper;
 
-    @PostMapping(value = "/proto/jsontopb", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/jsontopb", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "JsonToPb", description = "json을 pb로 변환해줍니다")
     public ResponseEntity<?> getJsonToPb(@RequestPart("file") MultipartFile file) {
 
@@ -52,7 +49,7 @@ public class PBProtoController {
 
     }
 
-    @PostMapping(value = "/proto/pbtojson", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/pbtojson", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "PbToJson", description = "PB을 Json로 변환해줍니다")
     public ResponseEntity<?> getPbToJson(@RequestPart("file") MultipartFile file) {
 

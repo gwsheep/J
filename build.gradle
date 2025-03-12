@@ -31,6 +31,9 @@ dependencies {
 	implementation 'com.google.protobuf:protobuf-java-util:4.30.0'
 	//swagger
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+	//apache kafka
+	implementation 'org.springframework.kafka:spring-kafka'
+
 
 
 	compileOnly 'org.projectlombok:lombok'
