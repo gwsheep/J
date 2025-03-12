@@ -1,4 +1,4 @@
-package com.practice.J.service;
+package com.practice.J.Protobuf.service;
 
 public class JsonService {
 

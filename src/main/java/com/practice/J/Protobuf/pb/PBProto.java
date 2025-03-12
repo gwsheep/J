@@ -3,7 +3,7 @@
 // source: fruit.proto
 // Protobuf Java Version: 4.30.0
 
-package com.practice.J.pb;
+package com.practice.J.Protobuf.pb;
 
 public final class PBProto {
   private PBProto() {}

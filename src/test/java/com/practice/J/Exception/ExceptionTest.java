@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 //@WebMvcTest(ExceptionTest.TestController.class)
-    @Import(ExceptionTest.TestConfig.class)
+@Import(ExceptionTest.TestConfig.class)
 public class ExceptionTest {
 
     @Autowired

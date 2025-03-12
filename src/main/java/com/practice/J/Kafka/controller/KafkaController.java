@@ -1,6 +1,6 @@
-package com.practice.J.controller;
+package com.practice.J.Kafka.controller;
 
-import com.practice.J.service.KafkaProducerService;
+import com.practice.J.Kafka.service.KafkaProducerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

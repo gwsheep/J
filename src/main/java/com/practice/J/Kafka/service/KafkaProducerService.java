@@ -1,4 +1,4 @@
-package com.practice.J.service;
+package com.practice.J.Kafka.service;
 
 
 import lombok.RequiredArgsConstructor;

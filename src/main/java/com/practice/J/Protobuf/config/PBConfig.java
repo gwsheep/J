@@ -1,4 +1,4 @@
-package com.practice.J.config;
+package com.practice.J.Protobuf.config;
 
 
 import org.springframework.context.annotation.Bean;

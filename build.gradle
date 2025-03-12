@@ -35,6 +35,8 @@ dependencies {
 	implementation 'org.springframework.kafka:spring-kafka'
 
 
+	//test : Geographical Item
+	implementation 'org.locationtech.jts:jts-core:1.18.2'
 
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'

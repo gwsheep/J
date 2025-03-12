@@ -1,4 +1,4 @@
-package com.practice.J.pb;
+package com.practice.J.Protobuf.pb;
 
 import com.google.protobuf.DescriptorProtos;
 import com.google.protobuf.Descriptors;

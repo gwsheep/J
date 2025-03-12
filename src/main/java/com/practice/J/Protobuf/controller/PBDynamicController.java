@@ -1,11 +1,11 @@
-package com.practice.J.controller;
+package com.practice.J.Protobuf.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.protobuf.Descriptors;
 import com.google.protobuf.DynamicMessage;
 import com.google.protobuf.util.JsonFormat;
-import com.practice.J.pb.PBDynamicDescriptor;
+import com.practice.J.Protobuf.pb.PBDynamicDescriptor;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
