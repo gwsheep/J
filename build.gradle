@@ -26,8 +26,12 @@ repositories {
 dependencies {
 	//implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	//google protobuf
 	implementation 'com.google.protobuf:protobuf-java:4.30.0'
 	implementation 'com.google.protobuf:protobuf-java-util:4.30.0'
+	//swagger
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+
 
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'

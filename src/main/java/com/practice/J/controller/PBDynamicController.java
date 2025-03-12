@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.protobuf.Descriptors;
 import com.google.protobuf.DynamicMessage;
 import com.google.protobuf.util.JsonFormat;
-import com.practice.J.pb.PBSample;
+import com.practice.J.pb.PBDynamicDescriptor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -21,15 +21,18 @@ import java.io.IOException;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-public class PBController {
+public class PBDynamicController {
 
     private final ObjectMapper objectMapper;
 
-    @PostMapping(value = "/jsontopb", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/dynamic/jsontopb", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> getJsonToPb(@RequestPart("file") MultipartFile file) {
+
+        log.info("========== Protobuf Dynamic Message start ==========");
+
         try {
             JsonNode jsonNode = objectMapper.readTree(file.getBytes());
-            Descriptors.Descriptor descriptor = PBSample.getDescriptor();
+            Descriptors.Descriptor descriptor = PBDynamicDescriptor.getDescriptor();
             DynamicMessage.Builder builder = DynamicMessage.newBuilder(descriptor);
             JsonFormat.parser().merge(jsonNode.toString(), builder);
             DynamicMessage dynamicMessage = builder.build();
@@ -45,12 +48,14 @@ public class PBController {
         }
     }
 
-    @PostMapping(value = "/pbtojson", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/dynmaic/pbtojson", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> getPbToJson(@RequestPart("file") MultipartFile file) {
+
+        log.info("========== Protobuf Dynamic Message start ==========");
 
         try {
             byte[] pbFile = file.getBytes();
-            Descriptors.Descriptor descriptor = PBSample.getDescriptor();
+            Descriptors.Descriptor descriptor = PBDynamicDescriptor.getDescriptor();
             DynamicMessage dynamicMessage = DynamicMessage.parseFrom(descriptor, pbFile);
             String message = JsonFormat.printer().print(dynamicMessage);
 

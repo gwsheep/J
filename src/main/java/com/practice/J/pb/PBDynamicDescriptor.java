@@ -3,7 +3,7 @@ package com.practice.J.pb;
 import com.google.protobuf.DescriptorProtos;
 import com.google.protobuf.Descriptors;
 
-public class PBSample {
+public class PBDynamicDescriptor {
 
     /* sample
     {
@@ -39,7 +39,7 @@ public class PBSample {
         DescriptorProtos.DescriptorProto resultDescriptor = DescriptorProtos.DescriptorProto.newBuilder()
                 .setName("Result")
                 .addField(DescriptorProtos.FieldDescriptorProto.newBuilder()
-                        .setName("result") // "result" 필드
+                        .setName("result")
                         .setNumber(1)
                         .setType(DescriptorProtos.FieldDescriptorProto.Type.TYPE_MESSAGE)
                         .setLabel(DescriptorProtos.FieldDescriptorProto.Label.LABEL_REPEATED)

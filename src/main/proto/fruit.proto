@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package com.practice.J;
+
+message Fruit {
+  string name = 1;
+  int32 quantity = 2;
+}
+
+message Result {
+  repeated Fruit result = 1;
+}
