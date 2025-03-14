@@ -1,15 +1,13 @@
 package com.practice.J.Kafka.controller;
 
+import com.practice.J.Kafka.service.KafkaConsumerService;
 import com.practice.J.Kafka.service.KafkaProducerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -19,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class KafkaController {
 
     private final KafkaProducerService kafkaProducerService;
+    private final KafkaConsumerService kafkaConsumerService;
 
     @PostMapping("/send")
     @Operation(summary = "kafkaSend", description = "kafka를 이용하여 메시지를 송신합니다")
@@ -36,4 +35,5 @@ public class KafkaController {
         }
 
     }
+
 }

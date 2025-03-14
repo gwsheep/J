@@ -33,16 +33,23 @@ dependencies {
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
 	//apache kafka
 	implementation 'org.springframework.kafka:spring-kafka'
-
-
 	//test : Geographical Item
 	implementation 'org.locationtech.jts:jts-core:1.18.2'
+	//rate limit : bucket4j
+	implementation 'com.bucket4j:bucket4j-core:8.9.0'
+	implementation 'com.bucket4j:bucket4j-redis:8.9.0'
+	//redis
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	implementation 'io.lettuce:lettuce-core:6.5.5.RELEASE'
 
+	//developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.projectlombok:lombok'
+
+	//test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
 }
 
 tasks.named('test') {
