@@ -21,7 +21,7 @@ public class RateController {
         log.info("==== test_1 API 호출");
 
         try {
-            Thread.sleep(5000);
+            Thread.sleep(1000);
             return ResponseEntity.ok("test 요청");
         } catch (InterruptedException e) {
             log.error("에러 발생 = " + e.getMessage());
@@ -37,7 +37,7 @@ public class RateController {
         log.info("==== test_2 API 호출");
 
         try {
-            Thread.sleep(5000);
+            Thread.sleep(500);
             return ResponseEntity.ok("test 요청");
         } catch (InterruptedException e) {
             log.error("에러 발생 = " + e.getMessage());
@@ -53,7 +53,7 @@ public class RateController {
         log.info("==== test_3 API 호출");
 
         try {
-            Thread.sleep(5000);
+            Thread.sleep(2000);
             return ResponseEntity.ok("test 요청");
         } catch (InterruptedException e) {
             log.error("에러 발생 = " + e.getMessage());

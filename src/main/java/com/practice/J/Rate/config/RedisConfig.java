@@ -24,6 +24,7 @@ public class RedisConfig {
     @Value("${spring.data.redis.port}")
     private int port;
 
+    //redis 클라이언트 설정
     @Bean(destroyMethod = "shutdown")
     public RedisClient redisClient() {
         return RedisClient.create(
@@ -33,8 +34,11 @@ public class RedisConfig {
                         .build());
     }
 
+    //Bucket4j가 Redis 같은 외부 저장소를 사용하여 Rate Limiting 데이터를 관리할 수 있도록 도와주는 인터페이스
     @Bean
     public ProxyManager<String> proxyManager(RedisClient redisClient) {
+
+        //redis 연결 세션
         StatefulRedisConnection<String, byte[]> connection =
                 redisClient.connect(RedisCodec.of(StringCodec.UTF8, ByteArrayCodec.INSTANCE));
         
@@ -42,8 +46,9 @@ public class RedisConfig {
         return LettuceBasedProxyManager
                 .builderFor(connection)
                 //.withExpirationStrategy(ExpirationAfterWriteStrategy.basedOnTimeForRefillingBucketUpToMax(Duration.ofMinutes(1L)))
-                .withExpirationStrategy(ExpirationAfterWriteStrategy.basedOnTimeForRefillingBucketUpToMax(Duration.ofSeconds(20)))
+                .withExpirationStrategy(ExpirationAfterWriteStrategy.fixedTimeToLive(Duration.ofSeconds(10L)))  //TTL 무제한 증가 방지
                 .build();
+
     }
 
 }

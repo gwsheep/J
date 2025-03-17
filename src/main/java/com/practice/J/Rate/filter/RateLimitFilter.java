@@ -41,13 +41,23 @@ public class RateLimitFilter implements Filter {
 
         log.info("address 확인 = {}", address);
 
+        //bucket 설정
         Supplier<BucketConfiguration> bucketConfiguration = getBucketConfiguration();
-//        Bucket bucket = proxyManager.builder().withRecoveryStrategy(RecoveryStrategy.RECONSTRUCT).build(address, bucketConfiguration);
+
+        //요청마다 Bucket 생성 O
+        //Bucket bucket = proxyManager.builder().withRecoveryStrategy(RecoveryStrategy.RECONSTRUCT).build(address, bucketConfiguration);
+
+        //요청마다 Bucket 생성 X
         Bucket bucket = bucketPool.computeIfAbsent(address,
-                            k -> proxyManager.builder().withRecoveryStrategy(RecoveryStrategy.RECONSTRUCT).build(address, bucketConfiguration));
+                //1) redis : proxyManager 활용 - RecoveryStrategy.RECONSTRUCT : Redis에서 기존 bucket 정보 불러옴
+                k -> proxyManager.builder().withRecoveryStrategy(RecoveryStrategy.RECONSTRUCT).build(address, bucketConfiguration));
+                //2) jvm : 메모리 활용
+                //k -> Bucket.builder().addLimit(getBandwidthIntervally()).build());
 
         log.info("사용 중인 bucket = {}", bucket);
         log.info("=== 가능 token = {} ", bucket.getAvailableTokens());
+
+        //경쟁 조건(race condition)과 동기화 문제 해결
         ConsumptionProbe consumptionProbe = bucket.tryConsumeAndReturnRemaining(1);
 
         if (consumptionProbe.isConsumed()) {
@@ -60,28 +70,35 @@ public class RateLimitFilter implements Filter {
 
     }
 
+    //Bucket 설정 : 토큰 개수, Refill 전략
     public Supplier<BucketConfiguration> getBucketConfiguration() {
         return () -> BucketConfiguration.builder().addLimit(getBandwidthIntervally()).build();
     }
 
-    //bucket 내 token 활용 - interval 전략
+    //Bucket 내 token 활용 - interval 전략
     public Bandwidth getBandwidthIntervally() {
-        return Bandwidth.builder().capacity(2).refillIntervally(1, Duration.ofSeconds(30)).build();
+        //return Bandwidth.builder().capacity(50).refillIntervally(1, Duration.ofSeconds(10L)).build();
+        return Bandwidth.builder().capacity(50).refillIntervally(1, Duration.ofSeconds(10L)).build();
     }
 
     //bucket 내 token 활용 - greedy 전략
     public Bandwidth getBandwidthGreedy() {
-        return Bandwidth.builder().capacity(100).refillGreedy(1, Duration.ofSeconds(6)).build();
+        return Bandwidth.builder().capacity(50).refillGreedy(1, Duration.ofSeconds(10L)).build();
     }
 
-
+    //token 이 없다면 : 429 응답
     private HttpServletResponse makeRateLimitResponse(ServletResponse servletResponse, ConsumptionProbe probe) throws IOException {
 
         HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
         httpResponse.setContentType("text/plain");
+
+        //1) http 헤더에 Rate-limit 정책 알림
         httpResponse.setHeader("X-Rate-Limit-Retry-After-Seconds", "" + TimeUnit.NANOSECONDS.toSeconds(probe.getNanosToWaitForRefill()));
+
+        //2) http 헤더에 429 추가
         httpResponse.setStatus(429);
         httpResponse.getWriter().append("Too many requests");
+
         return httpResponse;
 
     }
