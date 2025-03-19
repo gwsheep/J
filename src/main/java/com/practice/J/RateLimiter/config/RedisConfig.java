@@ -1,4 +1,4 @@
-package com.practice.J.Rate.config;
+package com.practice.J.RateLimiter.config;
 
 import io.github.bucket4j.distributed.ExpirationAfterWriteStrategy;
 import io.github.bucket4j.distributed.proxy.ProxyManager;
@@ -25,7 +25,8 @@ public class RedisConfig {
     private int port;
 
     //redis 클라이언트 설정
-    @Bean(destroyMethod = "shutdown")
+    //@Bean(destroyMethod = "shutdown")
+    @Bean
     public RedisClient redisClient() {
         return RedisClient.create(
                 RedisURI.builder()
@@ -46,7 +47,7 @@ public class RedisConfig {
         return LettuceBasedProxyManager
                 .builderFor(connection)
                 //.withExpirationStrategy(ExpirationAfterWriteStrategy.basedOnTimeForRefillingBucketUpToMax(Duration.ofMinutes(1L)))
-                .withExpirationStrategy(ExpirationAfterWriteStrategy.fixedTimeToLive(Duration.ofSeconds(10L)))  //TTL 무제한 증가 방지
+                .withExpirationStrategy(ExpirationAfterWriteStrategy.fixedTimeToLive(Duration.ofSeconds(60L)))  //TTL 무제한 증가 방지
                 .build();
 
     }

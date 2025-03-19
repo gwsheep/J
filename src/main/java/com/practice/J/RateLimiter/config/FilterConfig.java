@@ -1,11 +1,9 @@
-package com.practice.J.Rate.config;
+package com.practice.J.RateLimiter.config;
 
-import com.practice.J.Rate.filter.RateLimitFilter;
+import com.practice.J.RateLimiter.filter.RateLimitFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.Arrays;
 
 @Configuration
 public class FilterConfig {

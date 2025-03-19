@@ -1,4 +1,4 @@
-package com.practice.J.Rate.filter;
+package com.practice.J.RateLimiter.filter;
 
 import io.github.bucket4j.*;
 import io.github.bucket4j.distributed.proxy.ProxyManager;
@@ -38,7 +38,6 @@ public class RateLimitFilter implements Filter {
         log.info("=============" + ++requestNum + "번째 요청 ==============");
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         String address = httpServletRequest.getRemoteAddr();
-
         log.info("address 확인 = {}", address);
 
         //bucket 설정
@@ -78,7 +77,7 @@ public class RateLimitFilter implements Filter {
     //Bucket 내 token 활용 - interval 전략
     public Bandwidth getBandwidthIntervally() {
         //return Bandwidth.builder().capacity(50).refillIntervally(1, Duration.ofSeconds(10L)).build();
-        return Bandwidth.builder().capacity(50).refillIntervally(1, Duration.ofSeconds(10L)).build();
+        return Bandwidth.builder().capacity(50).refillIntervally(1, Duration.ofSeconds(60L)).build();
     }
 
     //bucket 내 token 활용 - greedy 전략
