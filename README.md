@@ -1,5 +1,5 @@
 
-Priactic
+Priactice
 
 1. Kafka
 2. Google Protocol Buffers
